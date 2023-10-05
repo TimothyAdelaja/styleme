@@ -1,0 +1,41 @@
+# Compiled class file
+/target/
+
+# Maven
+mvn-wrapper.jar
+mvnw
+mvnw.cmd
+.mvn/
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# Spring Boot
+application.properties
+application.yml
+spring-configuration-metadata.json
+spring-boot-starter.log
+
+# Log files
+*.log
+logs/
+
+# IntelliJ IDEA files
+.idea
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Visual Studio Code
+.vscode/
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
