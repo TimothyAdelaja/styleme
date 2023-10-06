@@ -82,12 +82,11 @@ const Login = () => {
     
       axios.post(`${config.REACT_APP_LOGIN_URL}`, payload)
           .then((response) => {
-              console.log(response)
-              response.data[0].password === userInput["password"] && navigate("/wardrobe")
+              let responseEmail = JSON.parse(response.config.data).email;
+              console.log(responseEmail === email);
+              responseEmail === email && navigate("/wardrobe")
           })
           .catch((error) => console.log(error))
-
-          // window.location.href = `${config.REACT_APP_FRONTEND_URL}/${wardrobe}`;
 
   }
   
