@@ -1,5 +1,7 @@
 package com.interswitch.StyleMe.config;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,5 +32,24 @@ public class Config {
     public WebClient webClient() {
         return WebClient.builder().build();
     }
+
+     @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        //First way of configuring core
+        final CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowCredentials(false);
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-TYpe", "Accept",
+                "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Access-Control-Request-Method",
+                "Access-Control-Request-Headers", "Origin"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:8080/", "google.com", "facebook.com","http://localhost:3000/"));
+        corsConfiguration.setAllowedMethods(List.of(
+                HEAD.name(), GET.name(), POST.name(), PUT.name(), PATCH.name(), DELETE.name()
+        ));
+        corsConfiguration.setMaxAge(3600L);
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
+    }
+
 
 }
