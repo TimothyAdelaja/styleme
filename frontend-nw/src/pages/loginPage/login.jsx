@@ -105,7 +105,7 @@ const Login = () => {
                 Continue with google
               </button>
               <div className="loginoptions-or">
-                  <p className="loginoptions-hr-text"><span>OR</span></p>
+                  <p><span>OR</span></p>
               </div>
               <div className="loginform-container">
                 <p className="loginform-text">Enter your details to get started</p>

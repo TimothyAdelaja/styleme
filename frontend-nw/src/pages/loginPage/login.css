@@ -6,7 +6,7 @@ body {
     padding: 0;
     background: #FFFFFF;
     font-family: manrope;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 html {
@@ -14,8 +14,6 @@ html {
 }
 
 .loginpage-container {
-    margin: 0;
-    padding: 0;
     width: 100%;
     height: auto;
     border-style: dashed;
@@ -31,7 +29,7 @@ html {
     display: flex;
     justify-content: unset;
     flex-direction: column;
-    gap: 1em;
+    gap: 0.5em;
     width: 50%;
     align-items: center;
 }
@@ -42,7 +40,7 @@ html {
     font-weight: 1000;
     letter-spacing: 0.1rem;
     color: black;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .loginoptions-container {
@@ -52,7 +50,7 @@ html {
     align-items: center;
     gap: 1rem;
     width: 70%;
-    padding: 2rem;
+    padding: 1.5rem 2rem;
 }
 
 .loginoptions-container button {
@@ -71,6 +69,12 @@ html {
     gap: 1.5rem;
 }
 
+.loginoptions-container button:hover {
+    width: 92%;
+    height: 8.5vh;
+    transition: ease-in-out
+}
+
 .loginoptions-or {
     display: grid;
     flex-direction: row;
@@ -80,7 +84,7 @@ html {
 }
 
 
-.loginoptions-hr-text {
+.loginoptions-or p {
     text-align: center;
     font-weight: 300;
     width: 100%; 
@@ -89,7 +93,7 @@ html {
     margin: 1em 0;
 }
 
-.loginoptions-hr-text span {
+.loginoptions-or span {
     background:#fff; 
     padding: 0 10px;
 }
@@ -102,6 +106,7 @@ html {
     justify-content: center;
     border-radius: 10px;
     box-shadow: 0px 2px 0px .5px rgba(0 0 0 / 5%);
+    /* border: 1px solid red; */
 }
 
 .loginform-text {
@@ -125,13 +130,14 @@ html {
     font-family: Manrope;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 16px; /* 114.286% */
 }
 
 .loginform-form input {
     width: 100% ;
-    height: 3.5em;
+    height: 8.5vh;
+    /* height: 3.5em; */
     margin-bottom: 1em;
     padding: 0 1em;
     border: 0px solid #FBBC05;
@@ -209,8 +215,8 @@ html {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 65%;
-    right: 10%;
+    top: 65vh;
+    left: 60vw;
     gap: 4.5em;
     color: white;
 }
@@ -221,7 +227,6 @@ html {
     font-size: 2.2em;
     font-weight: 700;
     letter-spacing: 0.1rem;
-    color: white;
 }
 
 .carousel-buttons {
