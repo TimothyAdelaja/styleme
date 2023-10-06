@@ -13,6 +13,6 @@ Some downloads using pip would be required, these are
 It can be run successfully afterwards
 
 The third folder is the "frontend", which can be opened any Pyhton compatible IDE, advisably Visual Studio Code
-To run this, Node Package Installer would be needed.
+To run this, Node Package Manager would be needed.
 
 
