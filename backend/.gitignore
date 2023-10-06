@@ -14,8 +14,6 @@ mvnw.cmd
 build/
 
 # Spring Boot
-application.properties
-application.yml
 spring-configuration-metadata.json
 spring-boot-starter.log
 
