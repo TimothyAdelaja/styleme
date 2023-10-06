@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@200;300;400;500;600&display=swap');
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+    font-family: manrope;
+    font-size: 18px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.loginpage-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    border-style: dashed;
+    overflow: hidden;
+    display: flex;   
+}
+
+/* .loginbody-container {
+    display: flex;
+} */
+
+.loginleft-container {
+    display: flex;
+    justify-content: unset;
+    flex-direction: column;
+    gap: 1em;
+    width: 50%;
+    align-items: center;
+}
+
+.loginleft-welcome {
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 1000;
+    letter-spacing: 0.1rem;
+    color: black;
+    margin-top: 2rem;
+}
+
+.loginoptions-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 70%;
+    padding: 2rem;
+}
+
+.loginoptions-container button {
+    border: 0.15rem solid #FBBC05;
+    width: 90%;
+    height: 8vh;
+    border-radius: 5rem;
+    color: #FBBC05;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.loginoptions-or {
+    display: grid;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    border: #000;
+}
+
+
+.loginoptions-hr-text {
+    text-align: center;
+    font-weight: 300;
+    width: 100%; 
+    border-bottom: 1.5px solid #000; 
+    line-height: 0.2em;
+    margin: 1em 0;
+}
+
+.loginoptions-hr-text span {
+    background:#fff; 
+    padding: 0 10px;
+}
+
+
+.loginform-container {
+    display:grid;
+    width: 100%;
+    gap: 1em;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0px 2px 0px .5px rgba(0 0 0 / 5%);
+}
+
+.loginform-text {
+    margin: 0.5em 0;
+    color: #FBBC05;
+    font-weight: 700;
+    font-size: 1.5em;
+    line-height: 24px;
+}
+
+.loginform-form {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5em;
+    font-size: 0.9;
+}
+
+.loginform-form label {
+    color: #14213D;
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 114.286% */
+}
+
+.loginform-form input {
+    width: 100% ;
+    height: 3.5em;
+    margin-bottom: 1em;
+    padding: 0 1em;
+    border: 0px solid #FBBC05;
+    border-radius: 8px;
+    background: #E1E6EF;
+    font-weight: 400;
+    outline: none;
+}
+
+.loginform-signin {
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center; 
+    gap: 2em;
+}
+
+.loginform-signin button {
+    border: 0.15rem solid rgba(252, 163, 17, 0.13);;
+    width: 90%;
+    height: 8vh;
+    border-radius: 5rem;
+    color: #FBBC05;
+    font-weight: 700;
+    line-height: 24px;
+    background-color: #14213D;
+}
+
+.loginform-signin .dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-left: 3em;
+}
+
+.loginform-signin .dont p {
+    color: #14213D;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+}
+
+.loginform-signin .dont a {
+    color: #FCA311;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    padding: 0 1em;
+}
+
+.logincarousel-container {
+    width: 50%;
+    height: auto;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel-picture {
+    width: 100%;
+    height: auto;
+    margin: 0px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.carousel-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 65%;
+    right: 10%;
+    gap: 4.5em;
+    color: white;
+}
+
+.carousel-label {
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2em;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    color: white;
+}
+
+.carousel-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    height: 20px;
+    background-color: transparent;
+}
+
+.carousel-buttons button {
+    background-color: white;
+    height: 1.5vh;
+    width: 1.5vw;
+    border-radius: 1em;
+}
+
+.carousel-buttons .inactive {
+    background-color: white;
+    height: 1.5vh;
+    width: 1.5vw;
+    border-radius: 1em;
+}
+
+.carousel-buttons .active {
+    background-color: grey;
+    height: 1.5vh;
+    width: 4vw;
+    border-radius: 1em;
+}
+
