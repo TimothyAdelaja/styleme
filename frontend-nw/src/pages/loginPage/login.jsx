@@ -79,7 +79,6 @@ const Login = () => {
   };
 
   const handleClick = (e) => {
-    
       axios.post(`${config.REACT_APP_LOGIN_URL}`, payload)
           .then((response) => {
             let responseEmail = JSON.parse(response.config.data).email;
@@ -87,9 +86,12 @@ const Login = () => {
             responseEmail === email && navigate("/wardrobe")
           })
           .catch((error) => console.log(error))
+  }
 
-          // window.location.href = `${config.REACT_APP_FRONTEND_URL}/${wardrobe}`;
-
+  const handleKeypress = (e) => {
+      var key = e.which || e.keyCode;
+      console.log(key);
+      console.log(e.key);
   }
   
   return (
@@ -125,7 +127,10 @@ const Login = () => {
                 </div>
               </div>
               <div className="loginform-signin">
-                  <button onClick={handleClick}>Sign In</button>
+                  <button onClick={handleClick} 
+                          onKeyDown={handleKeypress}>
+                            Sign In
+                  </button>
                   <div className="dont">
                     <p>Don&apos;t have an account?</p>
                     <a href="/signup">
