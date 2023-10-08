@@ -62,7 +62,7 @@ public class UserController {
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateJWTToken(authentication);
-        httpServletResponse.setHeader("token", token);
+        httpServletResponse.setHeader("access-control-expose-headers", token);
     }
 
 
