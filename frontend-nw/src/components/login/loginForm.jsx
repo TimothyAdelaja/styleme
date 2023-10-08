@@ -56,7 +56,7 @@ const LoginComponent = () => {
       console.log("headers here", token);
       if (response.status === 200) {
         setSuccessMessage("Login successful.");
-        navigate("/dashboard");
+        navigate("/wardrobe");
       } else {
         setErrorMessage("Login failed. Please try again later.");
       }
