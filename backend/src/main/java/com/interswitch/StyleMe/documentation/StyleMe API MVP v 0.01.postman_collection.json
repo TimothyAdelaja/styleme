@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b79cf085-2465-4b59-82b9-d0c5425d2eff",
+		"_postman_id": "ddbbe0ef-3e86-4d9e-b7c6-031fa677420b",
 		"name": "StyleMe API MVP v 0.01",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24285366",
-		"_collection_link": "https://grey-astronaut-644129.postman.co/workspace/DecaPay~05eba7a5-7e3a-46ab-a4c9-3f41a46de0c3/collection/24285366-b79cf085-2465-4b59-82b9-d0c5425d2eff?action=share&source=collection_link&creator=24285366"
+		"_exporter_id": "13720896"
 	},
 	"item": [
 		{
@@ -127,6 +126,57 @@
 					"response": []
 				},
 				{
+					"name": "Get outfits",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsIjEyMzQ1MTIzNDVoamhoanVpamt1amhtamZyZWpqaHJlamhiamZyamhyZWZqcmVqZXJmam5ram5lcmpuZWtqa25yamtydGprdHJnamt0amtnamt0cmdqa3RyZyI6IlJPTEVfVVNFUiIsImlhdCI6MTY5NDQ3NTAwNSwiZXhwIjoxNjk0NTYxNDA1fQ.1kkoVz9N3AOzLGhATK1T8SMoMhaA1ZeFLyRQbryGOSY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "skirt2.png"
+								},
+								{
+									"key": "itemCategory",
+									"value": "Skirt",
+									"type": "text"
+								},
+								{
+									"key": "eventTypes",
+									"value": "Work, Sunday, Party",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/outfits/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"outfits",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Image",
 					"request": {
 						"auth": {
@@ -154,6 +204,14 @@
 								"18U8JjFCGlQtZdxHS5U95uENwlZ5e8D--"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}

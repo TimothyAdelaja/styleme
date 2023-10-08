@@ -40,7 +40,7 @@ html {
     font-weight: 1000;
     letter-spacing: 0.1rem;
     color: black;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 .loginoptions-container {
@@ -169,8 +169,11 @@ html {
 
 .loginform-signin .dont {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-left: 3em;
+    grid-template-columns: 1.5fr 1fr;
+    /* padding: 0em 2em; */
+    /* padding-left: 2em; */
+    gap: 2em;
+    border: 1px solid red;
 }
 
 .loginform-signin .dont p {
@@ -180,15 +183,17 @@ html {
     font-style: normal;
     font-weight: 500;
     line-height: 24px; /* 150% */
+    border: 1px solid red;
 }
 
 .loginform-signin .dont a {
     color: #FCA311;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
-    padding: 0 1em;
+    padding: 0em;
+    border: 1px solid red;
 }
 
 .logincarousel-container {
