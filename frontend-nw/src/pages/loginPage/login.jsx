@@ -94,7 +94,6 @@ const Login = () => {
   
   return (
     <div className="loginpage-container">
-        {/* <div className="loginbody-container"> */}
           <div className="loginleft-container">
             <div className="loginleft-welcome">
               <h1>Welcome Back!</h1>
@@ -138,7 +137,6 @@ const Login = () => {
           <div className="logincarousel-container">
               <Carousel images={images} tags={tags} m/>
           </div>
-        {/* </div> */}
     </div>
   );
 };
