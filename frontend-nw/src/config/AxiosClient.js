@@ -8,7 +8,7 @@ AxiosClient.interceptors.request.use((request) => {
 	const token = localStorage.getItem("token");
 	if (token) {
 		const bearerToken = JSON.parse(token);
-		request.headers.Authorization = `Bearer ${bearerToken}`;
+		request.headers.Authorization = `Bearer ${bearerToken.token}`;
 	} else {
 		delete request.headers.Authorization;
 	}
