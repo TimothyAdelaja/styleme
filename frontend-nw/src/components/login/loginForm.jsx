@@ -65,7 +65,7 @@ const LoginComponent = () => {
         setErrorMessage("Login failed. Please try again later.");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
+      if (error.response && error.response.status === 500) {
         setErrorMessage("Invalid email or password.");
       } else {
         setErrorMessage("An error occurred. Please try again later.");
