@@ -88,10 +88,20 @@ const Login = () => {
           .catch((error) => console.log(error))
   }
 
+  const handleSigninWithGoogle = (e) => {
+    axios.post(`${config.REACT_APP_SIGN_WITH_GOOGLE_LOGIN_URL}`)
+    .then((response) => {
+      navigate("/wardrobe")
+    })
+    .catch((error) => console.log(error));
+  }
+
   const handleKeypress = (e) => {
-      var key = e.which || e.keyCode;
+      var key = e.which || e.keyCode || e.key;
       console.log(key);
-      console.log(e.key);
+      if (key === "Enter" || key === 13) {
+        handleClick()
+      }
   }
   
   return (
@@ -122,13 +132,13 @@ const Login = () => {
                   <input name="password" type="password" placeholder="Enter your password"
                           handleChange={handleChange} fieldError={fieldError}
                           onChange={(e) => setPassword(e.target.value)}
+                          onKeyDown={handleKeypress}
                   />
                 </div>
               </div>
               <div className="loginform-signin">
-                  <button onClick={handleClick} 
-                          onKeyDown={handleKeypress}>
-                            Sign In
+                  <button onClick={handleClick}>
+                    Sign In
                   </button>
                   <div className="dont">
                     <p>Don&apos;t have an account?</p>
