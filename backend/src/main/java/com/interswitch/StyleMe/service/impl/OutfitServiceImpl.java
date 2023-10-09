@@ -25,10 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.interswitch.StyleMe.dto.ClothDto.clothingItemDTO;
@@ -122,27 +119,28 @@ public class OutfitServiceImpl implements OutfitService {
 
         //get each cloth type for the event
         List<String> shirts = getItemCategoryList(clothingItems, ItemCategory.Shirt);
-
         List<String> trousers = getItemCategoryList(clothingItems, ItemCategory.Trouser);
-
         List<String> skirts = getItemCategoryList(clothingItems, ItemCategory.Skirt);
-
         List<String> dresses = getItemCategoryList(clothingItems, ItemCategory.Dress);
-
         List<String> apparels = getItemCategoryList(clothingItems, ItemCategory.Apparel);
-
         List<String> shoes = getItemCategoryList(clothingItems, ItemCategory.Shoe);
-
         List<String> bags = getItemCategoryList(clothingItems, ItemCategory.Bag);
+
+        // Select 3 random shirts and 3 random dresses
+        List<String> selectedShirts = selectRandomItems(shirts, 3);
+        List<String> selectedDresses = selectRandomItems(dresses, 3);
+
+        System.out.println(selectedDresses);
 
         ItemCategoryDto itemCategoryDto = new ItemCategoryDto();
         itemCategoryDto.setApparels(apparels);
         itemCategoryDto.setBags(bags);
-        itemCategoryDto.setDresses(dresses);
+        itemCategoryDto.setDresses(selectedDresses);
         itemCategoryDto.setShoes(shoes);
         itemCategoryDto.setSkirts(skirts);
-        itemCategoryDto.setShirts(shirts);
+        itemCategoryDto.setShirts(selectedShirts);
         itemCategoryDto.setTrousers(trousers);
+
 
         //send to python model
         RecommendationResponseDto recommendations = webClient.post()
@@ -164,12 +162,6 @@ public class OutfitServiceImpl implements OutfitService {
         return recommendations;
     }
 
-    private List<String> getItemCategoryList(List<ClothingItem> clothingItems, ItemCategory type) {
-        return clothingItems.stream()
-                .filter(item -> item.getItemCategory().equals(type))
-                .map(ClothingItem::getDriveId)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public void markClothForSale(String clothId) throws StyleMeException {
@@ -198,6 +190,22 @@ public class OutfitServiceImpl implements OutfitService {
             userClothingDTOList.add(userClothingDTO);
         }
         return userClothingDTOList;
+    }
+
+
+    private List<String> getItemCategoryList(List<ClothingItem> clothingItems, ItemCategory type) {
+        return clothingItems.stream()
+                .filter(item -> item.getItemCategory().equals(type))
+                .map(ClothingItem::getDriveId)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> selectRandomItems(List<String> itemList, int numItems) {
+        // Shuffle the list randomly
+        Collections.shuffle(itemList, new Random());
+
+        // Select the specified number of items or all if fewer items are available
+        return itemList.subList(0, Math.min(itemList.size(), numItems));
     }
 
 }
