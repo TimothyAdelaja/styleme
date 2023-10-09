@@ -83,7 +83,7 @@ const Login = () => {
 		password: password,
 	};
 
-	const handleClick = async (e) => {
+	const handleClick = async () => {
 		// axios.post(`${config.REACT_APP_LOGIN_URL}`, payload)
 		//     .then((response) => {
 		//       let responseEmail = JSON.parse(response.config.data).email;
