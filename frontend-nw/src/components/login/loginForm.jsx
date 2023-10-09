@@ -9,6 +9,10 @@ import {
   email_validation,
   password_validation,
 } from "../common/input/inputValidations";
+import {
+  login_email_validation,
+  login_password_validation,
+} from "../common/input/loginInputValidation";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
@@ -135,8 +139,8 @@ const LoginComponent = () => {
               autoComplete="off"
               className="flex flex-col gap-4 w-full"
             >
-              <Input {...email_validation} />
-              <Input {...password_validation} />
+              <Input {...login_email_validation} />
+              <Input {...login_password_validation} />
               {/* sign up button div */}
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
