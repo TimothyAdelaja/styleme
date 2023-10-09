@@ -49,7 +49,8 @@ public class OutfitServiceImpl implements OutfitService {
             );
 
             String fileId = googleDriveManager.uploadFile(file);
-            String fileURL = googleDriveManager.getImageURL(fileId);
+//            String fileURL = googleDriveManager.getImageURL(fileId);
+            String fileURL = "https://drive.google.com/uc?export=view&id=" + fileId;
 
             ClothingItem clothingItem = new ClothingItem();
             clothingItem.setDriveId(fileId);
