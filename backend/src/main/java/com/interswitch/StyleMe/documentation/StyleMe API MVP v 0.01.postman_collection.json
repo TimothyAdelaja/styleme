@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "ddbbe0ef-3e86-4d9e-b7c6-031fa677420b",
+		"_postman_id": "e02a1d43-46d3-45a6-a0f6-d86961c6ccd7",
 		"name": "StyleMe API MVP v 0.01",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13720896"
+		"_exporter_id": "24285366",
+		"_collection_link": "https://grey-astronaut-644129.postman.co/workspace/DecaPay~05eba7a5-7e3a-46ab-a4c9-3f41a46de0c3/collection/24285366-e02a1d43-46d3-45a6-a0f6-d86961c6ccd7?action=share&source=collection_link&creator=24285366"
 	},
 	"item": [
 		{
@@ -211,7 +212,10 @@
 					"name": "Generate",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -276,6 +280,95 @@
 								"v1",
 								"confirm",
 								"code"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Maps",
+			"item": [
+				{
+					"name": "Get Dry Cleaners",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpYW10aW1vc2hleUBnbWFpbC5jb20iLCIxMjM0NTEyMzQ1aGpoaGp1aWprdWpobWpmcmVqamhyZWpoYmpmcmpocmVmanJlamVyZmpua2puZXJqbmVramtucmprcnRqa3RyZ2prdGprZ2prdHJnamt0cmciOiJST0xFX1VTRVIiLCJpYXQiOjE2OTY4NDM3MDAsImV4cCI6MTY5NjkzMDEwMH0.Sqh9KtDXMm95-cww2iRXVTlYmWJqp6Q7S1m_KCdxMbs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/maps/findLaundry?radius=500",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"maps",
+								"findLaundry"
+							],
+							"query": [
+								{
+									"key": "radius",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Weather",
+			"item": [
+				{
+					"name": "Get Weather Condition",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpYW10aW1vc2hleUBnbWFpbC5jb20iLCIxMjM0NTEyMzQ1aGpoaGp1aWprdWpobWpmcmVqamhyZWpoYmpmcmpocmVmanJlamVyZmpua2puZXJqbmVramtucmprcnRqa3RyZ2prdGprZ2prdHJnamt0cmciOiJST0xFX1VTRVIiLCJpYXQiOjE2OTY4MDczNTEsImV4cCI6MTY5Njg5Mzc1MX0.rB2lNNN0NJ5O4lONGs34lUDLljXA0N6U0MPXQuvvq-I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/weather",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"weather"
 							]
 						}
 					},
