@@ -3,6 +3,9 @@ import woman from "../../assets/img/signup-videos/woman.mp4";
 import pnwring from "../../assets/img/signup-videos/pnw-ring.mp4";
 import martpick from  "../../assets/img/signup-videos/mart-pickout.mp4";
 import afrowoman from "../../assets/img/signup-videos/afro1.mp4";
+import lady from "../../pages/loginPage/images/frame_one.png"
+import guy from "../../pages/loginPage/images/frame_two.png"
+import sitGuy from "../../pages/loginPage/images/frame_three.png"
 
 
 export const accordions = [
@@ -58,4 +61,10 @@ export const testimonials = [
     martpick,
      woman,
      afrowoman
+  ]
+
+  export const logInSlides = [
+    lady,
+    guy,
+     sitGuy
   ]
