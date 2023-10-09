@@ -5,6 +5,7 @@ import com.interswitch.StyleMe.dto.requests.CreateAccountRequest;
 import com.interswitch.StyleMe.dto.requests.ForgotPasswordRequest;
 import com.interswitch.StyleMe.dto.requests.LoginRequest;
 import com.interswitch.StyleMe.dto.responses.ApiResponse;
+import com.interswitch.StyleMe.dto.responses.LoginResponseDto;
 import com.interswitch.StyleMe.exceptions.StyleMeException;
 import com.interswitch.StyleMe.model.User;
 import com.interswitch.StyleMe.security.jwt.TokenProvider;
@@ -53,7 +54,7 @@ public class UserController {
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Http Status 200 SUCCESS")
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public void loginUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) throws StyleMeException {
+    public ResponseEntity<LoginResponseDto> loginUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) throws StyleMeException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         User user = userService.findUserByEmail(loginRequest.getEmail());
@@ -62,7 +63,12 @@ public class UserController {
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateJWTToken(authentication);
-        httpServletResponse.setHeader("access-control-expose-headers", token);
+        LoginResponseDto loginResponseDto = new LoginResponseDto();
+        loginResponseDto.setFirstName(user.getFirstName());
+        loginResponseDto.setLastName(user.getLastName());
+        loginResponseDto.setEmail(user.getEmail());
+        loginResponseDto.setToken(token);
+        return ResponseEntity.ok(loginResponseDto);
     }
 
 
