@@ -131,8 +131,6 @@ public class OutfitServiceImpl implements OutfitService {
         List<String> selectedShirts = selectRandomItems(shirts, 3);
         List<String> selectedDresses = selectRandomItems(dresses, 3);
 
-        System.out.println(selectedDresses);
-
         ItemCategoryDto itemCategoryDto = new ItemCategoryDto();
         itemCategoryDto.setApparels(apparels);
         itemCategoryDto.setBags(bags);
