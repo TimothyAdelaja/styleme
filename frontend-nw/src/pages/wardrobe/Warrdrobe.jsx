@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import config from "../../../config"
-
 import {
   Logo,
   searchIcon,
@@ -32,13 +31,8 @@ import {
   maleDress2,
   maleDress3,
 } from "../../assets/img"
-import axios from "axios"
-import {
-  getOutfits,
-  getOutfitsForSale,
-  getServicesByRadius,
-} from "../../services/actions/dashboard-actions"
-import { set } from "react-hook-form"
+import { getOutfits } from "../../services/actions/dashboard-actions"
+import { Toaster, toast } from "react-hot-toast"
 
 const users = [
   {
@@ -54,82 +48,72 @@ const users = [
   },
 ]
 
-const radiusOptions = ["Very Near", "Near", "Far", "Very Far"]
-
 const Wardrobe = () => {
+  const navigate = useNavigate()
+
   const [tab, setTab] = useState("wardrobe")
   const [images, setImages] = useState([])
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null)
-  const [outfits, setOufits] = useState([])
-  const [outfitsForSale, setOutfitsForSale] = useState([])
-  const [services, setServices] = useState([])
-  const [radius, setRadius] = useState(500)
-  const [isLoading, setIsLoading] = useState(false)
+  const [workOutfits, setWorkOufits] = useState([])
+  const [sundayOutfits, setSundayOufits] = useState([])
+  const [nativeOutfits, setNativeOufits] = useState([])
+  const [partyOutfits, setPartyOufits] = useState([])
 
-  useEffect(() => {
-    const fetchOutfits = async () => {
-      try {
-        const response = await getOutfitsForSale()
-        console.log(response)
-        if (response.status === 200) {
-          setOutfitsForSale(response.data)
-          setIsLoading(false)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchOutfits()
-  }, [])
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await getServicesByRadius(radius)
-        //console.log(response)
-        if (response.status === 200) {
-          setServices(response.data)
-          setIsLoading(false)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchServices()
-  }, [radius])
-
-  //console.log(services)
-
-  const handleTabClick = async (tabName) => {
-    setIsLoading(true)
+  const handleWorkOufits = async () => {
+    toast.loading("Sending Request", { id: "1" })
     try {
-      const response = await getOutfits(tabName)
-      //console.log(response)
+      const response = await getOutfits("Work")
+      console.log(response)
       if (response.status === 200) {
-        setIsLoading(false)
-        setOufits(response.data)
+        setWorkOufits(response.data)
+        toast.success("Request successfull", { id: "1" })
       }
     } catch (error) {
       console.log(error)
     }
   }
 
-  const handleRadiusChange = (event) => {
-    switch (event.target.value) {
-      case "Very Near":
-        setRadius(500)
-        break
-      case "Near":
-        setRadius(1000)
-        break
-      case "Far":
-        setRadius(1500)
-        break
-      case "Very Far":
-        setRadius(2000)
-        break
-      default:
-        setRadius(500)
+  const handleSundayOufits = async () => {
+    toast.loading("Sending Request", { id: "1" })
+    try {
+      const response = await getOutfits("Sunday")
+      console.log(response)
+      if (response.status === 200) {
+        setSundayOufits(response.data)
+        toast.success("Request successfull", { id: "1" })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleNativeOufits = async () => {
+    toast.loading("Sending Request", { id: "1" })
+
+    try {
+      const response = await getOutfits("Native")
+      console.log(response)
+      if (response.status === 200) {
+        setNativeOufits(response.data)
+        toast.success("Request successfull", { id: "1" })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handlePartyOutfits = async () => {
+    toast.loading("Sending Request", { id: "1" })
+
+    try {
+      const response = await getOutfits("Party")
+      console.log(response)
+      if (response.status === 200) {
+        setPartyOufits(response.data)
+        toast.success("Request successfull", { id: "1" })
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -254,8 +238,13 @@ const Wardrobe = () => {
     }
   }
 
+  const userDetails = localStorage.getItem("token")
+  const user = JSON.parse(userDetails)
+  const userEmail = user.email
+
   return (
     <div className="w-full h-full bg-[#F2F5FE]">
+      <Toaster />
       {/* HEADER */}
       <div className="fixed z-10 flex items-center justify-between w-full h-20 px-6 bg-white shadow-md">
         <div className="flex items-center gap-4 bg-[#14213D] text-white p-3">
@@ -280,14 +269,20 @@ const Wardrobe = () => {
             className="cursor-pointer"
           />
           <img src={alertIcon} alt="alert-icon" className="cursor-pointer" />
+          <button
+            className="bg-[#14213D] text-white px-2 py-2 rounded-md"
+            onClick={() => navigate("/login")}
+          >
+            LogOut
+          </button>
           <div className="flex items-center gap-2">
             <img
               src={profileImg}
               alt="profile-img"
               className="rounded-[50%] h-[40px] w-[40px] cursor-pointer"
             />
-            <p className="w-32 font-semibold text-center text-md">
-              Welcome back!
+            <p className="w-40 text-sm font-semibold text-center">
+              Welcome back {userEmail}
             </p>
           </div>
         </div>
@@ -350,107 +345,128 @@ const Wardrobe = () => {
               Categories
             </div>
 
-            <div className="flex flex-col w-[900px] gap-6 rounded-xl border border-solid justify-start items-center">
-              <div className="flex gap-4">
-                <div className="flex flex-col mb-6">
+            <div className="flex items-center justify-between w-full h-auto gap-6 border border-solid rounded-xl">
+              <div className="flex w-full gap-4">
+                <div className="flex h-auto w-[300px] flex-col">
                   <a
-                    onClick={() => handleTabClick("Work")}
-                    className="flex flex-col items-center gap-1 cursor-pointer work"
+                    onClick={() => handleWorkOufits()}
+                    className="flex flex-col items-center gap-1 mb-10 cursor-pointer"
                   >
-                    <img src={Workwear} alt="" className="pl-2" name="work" />
+                    <img
+                      src={Workwear}
+                      alt=""
+                      className="h-[300px] w-[250px]"
+                      name="work"
+                    />
                     <div className="flex gap-1 font-bold">
                       <p>Work Closet </p>
                       <img src={Downwardarrow} alt="" />
                     </div>
                   </a>
 
-                  {isLoading
-                    ? "Loading... "
-                    : outfits.map((outfit) => (
-                        <div>
-                          <img
-                            key={outfit.driveId}
-                            src={outfit.url}
-                            alt=""
-                            className="pl-2"
-                            name="work"
-                          />
-                          <p>{outfit.event}</p>
-                        </div>
-                      ))}
+                  {workOutfits.map((outfit) => (
+                    <div className="flex justify-center mb-4">
+                      <img
+                        key={outfit.driveId}
+                        src={outfit.url}
+                        alt=""
+                        className="rounded-md h-[300px] w-[250px]"
+                        name="work"
+                      />
+                    </div>
+                  ))}
                 </div>
-
-                <a
-                  onClick={() => handleTabClick("Sunday")}
-                  className="cursor-pointer sunday"
-                >
-                  <img src={Sundaywear} alt="" name="sunday" />
-                  <div className="flex gap-1 font-bold">
-                    <p>Sunday Closet</p>
-                    <img src={Downwardarrow} alt="" />
-                  </div>
-                </a>
-
-                <a
-                  onClick={() => handleTabClick("Native")}
-                  className="cursor-pointer native"
-                >
-                  <img src={Nativewear} alt="" name="native" />
-                  <div className="flex gap-1 font-bold">
-                    <p>Native Closet</p>
-                    <img src={Downwardarrow} alt="" />
-                  </div>
-                </a>
-
-                <a
-                  onClick={() => handleTabClick("Party")}
-                  className="cursor-pointer party"
-                >
-                  <img src={Partywear} alt="" name="party" />
-                  <div className="flex gap-1 font-bold">
-                    <p>Party Closet</p>
-                    <img src={Downwardarrow} alt="" />
-                  </div>
-                </a>
+                <div className="flex h-auto w-[300px] flex-col">
+                  <a
+                    onClick={() => handleSundayOufits()}
+                    className="flex flex-col items-center gap-1 mb-10 cursor-pointer"
+                  >
+                    <img
+                      src={Sundaywear}
+                      alt=""
+                      className="h-[300px] w-[250px]"
+                      name="sunday"
+                    />
+                    <div className="flex gap-1 font-bold">
+                      <p>Sunday Closet</p>
+                      <img src={Downwardarrow} alt="" />
+                    </div>
+                  </a>
+                  {sundayOutfits.map((outfit) => (
+                    <div className="flex justify-center mb-4">
+                      <img
+                        key={outfit.driveId}
+                        src={outfit.url}
+                        alt=""
+                        className="rounded-md h-[300px] w-[250px]"
+                        name="work"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex h-auto w-[300px] flex-col">
+                  <a
+                    onClick={() => handleNativeOufits()}
+                    className="flex flex-col items-center gap-1 mb-10 cursor-pointer"
+                  >
+                    <img
+                      src={Nativewear}
+                      alt=""
+                      name="native"
+                      className="h-[300px] w-[250px]"
+                    />
+                    <div className="flex gap-1 font-bold">
+                      <p>Native Closet</p>
+                      <img src={Downwardarrow} alt="" />
+                    </div>
+                  </a>
+                  {nativeOutfits.map((outfit) => (
+                    <div className="flex justify-center mb-4">
+                      <img
+                        key={outfit.driveId}
+                        src={outfit.url}
+                        alt=""
+                        className="rounded-md h-[300px] w-[250px]"
+                        name="work"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex h-auto w-[300px] flex-col">
+                  <a
+                    onClick={() => handlePartyOutfits()}
+                    className="flex flex-col items-center gap-1 mb-10 cursor-pointer"
+                  >
+                    <img
+                      src={Partywear}
+                      alt=""
+                      name="party"
+                      className="h-[300px] w-[250px]"
+                    />
+                    <div className="flex gap-1 font-bold">
+                      <p>Party Closet</p>
+                      <img src={Downwardarrow} alt="" />
+                    </div>
+                  </a>
+                  {partyOutfits.map((outfit) => (
+                    <div className="flex justify-center mb-4">
+                      <img
+                        key={outfit.driveId}
+                        src={outfit.url}
+                        alt=""
+                        className="rounded-md h-[300px] w-[250px]"
+                        name="work"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         )}
-        {tab === "services" && (
-          <div className="">
-            <select
-              onChange={handleRadiusChange}
-              name=""
-              id=""
-              className="w-full px-3 py-3 my-4 rounded-lg"
-            >
-              <option value="">Select radius</option>
-              {radiusOptions.map((radius, index) => (
-                <option key={index} value={radius}>
-                  {radius}
-                </option>
-              ))}
-            </select>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
-              {services?.map((service, index) => (
-                <div
-                  key={index}
-                  className="card rounded-lg border border-[#14213D] p-3"
-                >
-                  <span className="bg-[#14213D] text-slate-100 p-1 px-3 rounded-xl text-sm">
-                    {service?.openingHoursStatus}
-                  </span>
-                  <h2 className="py-3 text-lg font-medium">{service?.name}</h2>
-                  <p>{service?.address}</p>
-                  {/* <p>{service?.businessStatus}</p> */}
-                  <p className="py-3">
-                    {service?.rating}, {service?.userRatingsTotal}
-                  </p>
-                </div>
-              ))}
-            </div>
-            {/* <div className="flex flex-col items-center justify-center gap-20 mt-4">
+        {tab === "marketplace" && (
+          <div className="flex flex-col items-center justify-center min-h-screen">
+            <div className="flex flex-col items-center justify-center gap-20 mt-4">
               <div className="flex flex-col gap-10">
                 <label className="w-full md:w-[171px] h-[52px] rounded-lg bg-white border border-[#14213D] outline-[#14213D]  cursor-pointer text-center text-lg font-semibold">
                   Upload
@@ -519,24 +535,24 @@ const Wardrobe = () => {
               >
                 Generate
               </button>
-            </div> */}
+            </div>
           </div>
         )}
         {tab === "marketplace" && (
           <div className="flex flex-col justify-between w-full h-auto gap-20 mt-12">
             {/* USERS */}
-            {outfitsForSale?.map((user, index) => (
-              <div key={index} className="">
+            {users.map((user) => (
+              <div key={user.id} className="">
                 <h1 className="mb-6 text-2xl font-bold ">
                   {" "}
-                  User {user.id}: <span>{user.user?.firstName}</span>
+                  User {user.id}: <span>{user.name}</span>
                 </h1>
                 <div className="flex">
                   <div className="relative flex flex-wrap h-auto gap-3 px-4 py-6 bg-white">
-                    {user?.clothingItemsForSale?.map((img) => (
+                    {user.image.map((img) => (
                       <div className="rounded-lg w-[290px] h-[270px] mb-6">
                         <img
-                          src={img.url}
+                          src={img}
                           alt="user"
                           className="w-full rounded-lg"
                         />
