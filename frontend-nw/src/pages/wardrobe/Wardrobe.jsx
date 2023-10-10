@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import config from "../../../config"
 
@@ -33,7 +33,12 @@ import {
   maleDress3,
 } from "../../assets/img"
 import axios from "axios"
-import { getOutfits } from "../../services/actions/dashboard-actions"
+import {
+  getOutfits,
+  getOutfitsForSale,
+  getServicesByRadius,
+} from "../../services/actions/dashboard-actions"
+import { set } from "react-hook-form"
 
 const users = [
   {
@@ -49,24 +54,82 @@ const users = [
   },
 ]
 
+const radiusOptions = ["Very Near", "Near", "Far", "Very Far"]
+
 const Wardrobe = () => {
   const [tab, setTab] = useState("wardrobe")
   const [images, setImages] = useState([])
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null)
   const [outfits, setOufits] = useState([])
+  const [outfitsForSale, setOutfitsForSale] = useState([])
+  const [services, setServices] = useState([])
+  const [radius, setRadius] = useState(500)
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const fetchOutfits = async () => {
+      try {
+        const response = await getOutfitsForSale()
+        console.log(response)
+        if (response.status === 200) {
+          setOutfitsForSale(response.data)
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchOutfits()
+  }, [])
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await getServicesByRadius(radius)
+        //console.log(response)
+        if (response.status === 200) {
+          setServices(response.data)
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchServices()
+  }, [radius])
+
+  //console.log(services)
 
   const handleTabClick = async (tabName) => {
     setIsLoading(true)
     try {
       const response = await getOutfits(tabName)
-      console.log(response)
+      //console.log(response)
       if (response.status === 200) {
         setIsLoading(false)
         setOufits(response.data)
       }
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  const handleRadiusChange = (event) => {
+    switch (event.target.value) {
+      case "Very Near":
+        setRadius(500)
+        break
+      case "Near":
+        setRadius(1000)
+        break
+      case "Far":
+        setRadius(1500)
+        break
+      case "Very Far":
+        setRadius(2000)
+        break
+      default:
+        setRadius(500)
     }
   }
 
@@ -354,8 +417,40 @@ const Wardrobe = () => {
           </div>
         )}
         {tab === "services" && (
-          <div className="flex flex-col items-center justify-center min-h-screen">
-            <div className="flex flex-col items-center justify-center gap-20 mt-4">
+          <div className="">
+            <select
+              onChange={handleRadiusChange}
+              name=""
+              id=""
+              className="w-full px-3 py-3 my-4 rounded-lg"
+            >
+              <option value="">Select radius</option>
+              {radiusOptions.map((radius, index) => (
+                <option key={index} value={radius}>
+                  {radius}
+                </option>
+              ))}
+            </select>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+              {services?.map((service, index) => (
+                <div
+                  key={index}
+                  className="card rounded-lg border border-[#14213D] p-3"
+                >
+                  <span className="bg-[#14213D] text-slate-100 p-1 px-3 rounded-xl text-sm">
+                    {service?.openingHoursStatus}
+                  </span>
+                  <h2 className="py-3 text-lg font-medium">{service?.name}</h2>
+                  <p>{service?.address}</p>
+                  {/* <p>{service?.businessStatus}</p> */}
+                  <p className="py-3">
+                    {service?.rating}, {service?.userRatingsTotal}
+                  </p>
+                </div>
+              ))}
+            </div>
+            {/* <div className="flex flex-col items-center justify-center gap-20 mt-4">
               <div className="flex flex-col gap-10">
                 <label className="w-full md:w-[171px] h-[52px] rounded-lg bg-white border border-[#14213D] outline-[#14213D]  cursor-pointer text-center text-lg font-semibold">
                   Upload
@@ -424,24 +519,24 @@ const Wardrobe = () => {
               >
                 Generate
               </button>
-            </div>
+            </div> */}
           </div>
         )}
         {tab === "marketplace" && (
           <div className="flex flex-col justify-between w-full h-auto gap-20 mt-12">
             {/* USERS */}
-            {users.map((user) => (
-              <div key={user.id} className="">
+            {outfitsForSale?.map((user, index) => (
+              <div key={index} className="">
                 <h1 className="mb-6 text-2xl font-bold ">
                   {" "}
-                  User {user.id}: <span>{user.name}</span>
+                  User {user.id}: <span>{user.user?.firstName}</span>
                 </h1>
                 <div className="flex">
                   <div className="relative flex flex-wrap h-auto gap-3 px-4 py-6 bg-white">
-                    {user.image.map((img) => (
+                    {user?.clothingItemsForSale?.map((img) => (
                       <div className="rounded-lg w-[290px] h-[270px] mb-6">
                         <img
-                          src={img}
+                          src={img.url}
                           alt="user"
                           className="w-full rounded-lg"
                         />
