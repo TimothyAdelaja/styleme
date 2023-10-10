@@ -573,7 +573,7 @@ const Wardrobe = () => {
 						</div>
 					</div>
 				)}
-				{tab === "services" && (
+				{tab === "marketplace" && (
 					<div className="w-full gap-20 h-auto justify-between flex flex-col mt-12">
 						{/* USERS */}
 						{users.map((user) => (
