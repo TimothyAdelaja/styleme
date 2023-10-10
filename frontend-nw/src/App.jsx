@@ -8,18 +8,18 @@ import SignIn from "./pages/loginPage/signin";
 import ResetPassword from "./components/login/reset";
 
 function App() {
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/wardrobe" element={<Wardrobe />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/otp-input" element={<OtpInput />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-      </Routes>
-    </div>
-  );
+	return (
+		<div>
+			<Routes>
+				<Route path="/" element={<LandingPage />} />
+				<Route path="/wardrobe" element={<Wardrobe />} />
+				<Route path="/signup" element={<SignUpPage />} />
+				<Route path="/otp-input" element={<OtpInput />} />
+				<Route path="/login" element={<SignIn />} />
+				<Route path="/reset-password" element={<ResetPassword />} />
+			</Routes>
+		</div>
+	);
 }
 
 export default App;
