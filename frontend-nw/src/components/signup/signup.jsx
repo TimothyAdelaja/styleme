@@ -243,7 +243,7 @@ const Signup = () => {
               </div>
 
               {/* sign up with google div */}
-              <div
+              {/* <div
                 className="flex py-2 px-4 justify-center items-center gap-4
             border rounded-[2.4rem] border-[#F39B2B] opacity-50 bg-[#FFF] cursor-pointer  "
               >
@@ -253,7 +253,7 @@ const Signup = () => {
                 <button className="text-[#F39B2B] font-['Manrope'] text-sm font-medium not-italic leading-normal">
                   Sign up with Google
                 </button>
-              </div>
+              </div> */}
               <p className="text-[#14213D] text-center font-['Manrope'] text-sm not-italic font-medium">
                 Already have an account?
                 <a
