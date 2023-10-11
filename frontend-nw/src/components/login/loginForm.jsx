@@ -52,7 +52,10 @@ const LoginComponent = () => {
 				}
 			);
 			// console.log("Data sent successfully", response.data.token);
-			localStorage.setItem("token", JSON.stringify(response.data));
+			console.log('login response data', response.data);
+			console.log('login response data token', response.data.token);
+			
+			localStorage.setItem("token", JSON.stringify(response.data.token));
 			if (response.status === 200) {
 				setSuccessMessage("Login successful.");
 				navigate("/wardrobe");
@@ -102,7 +105,7 @@ const LoginComponent = () => {
 						{errorMessage}
 					</div>
 				)}
-				<div
+				{/* <div
 					className="flex py-2 px-4 justify-center items-center gap-4 w-1/2 overflow-auto
           border rounded-[2.4rem] border-[#F39B2B] opacity-50 bg-[#FFF] cursor-pointer  "
 				>
@@ -112,11 +115,11 @@ const LoginComponent = () => {
 					<button className="text-[#F39B2B] font-['Manrope'] text-base font-medium not-italic leading-normal">
 						Continue with Google
 					</button>
-				</div>
-				<div className="flex items-center gap-2">
+				</div> */}
+				{/* <div className="flex items-center gap-2">
 					<hr className="w-16 sm:w-48 h-1 bg-[#1B1B1BB2]" /> OR{" "}
 					<hr className="w-16 sm:w-48 h-1 bg-[#1B1B1BB2]" />
-				</div>
+				</div> */}
 
 				<div>
 					<p className="text-center text-xl not-italic font-bold leading-8 text-[#FCA311]">
