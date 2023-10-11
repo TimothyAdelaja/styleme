@@ -2,8 +2,12 @@ from dress_methods import get_dress_recommendations
 from shirt_methods import get_trousers_recommendations 
 from skirt_methods import get_skirt_recommendations
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+from flask_cors import cross_origin
 
 app = Flask(__name__)
+
+CORS(app)
 
 
 def get_recommendations(skirts=None, shirts=None, bags=None, trousers=None, shoes=None, dresses=None):
@@ -17,6 +21,7 @@ def get_recommendations(skirts=None, shirts=None, bags=None, trousers=None, shoe
 
 # Define the route for the recommendation API
 @app.route('/recommendations', methods=['POST'])
+@cross_origin()
 def recommendations():
     # Parse input parameters from the query string
       data=request.json

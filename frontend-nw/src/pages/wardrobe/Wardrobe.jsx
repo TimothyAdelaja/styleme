@@ -57,7 +57,7 @@ const users = [
 const radiusOptions = ["Very Near", "Near", "Far", "Very Far"]
 
 const Wardrobe = () => {
-  const [tab, setTab] = useState("wardrobe")
+  const [tab, setTab] = useState("dashboard")
   const [images, setImages] = useState([])
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null)
   const [outfits, setOufits] = useState([])
@@ -65,6 +65,18 @@ const Wardrobe = () => {
   const [services, setServices] = useState([])
   const [radius, setRadius] = useState(500)
   const [isLoading, setIsLoading] = useState(false)
+  const [wardrobeType, setWardrobeType] = useState("")
+  // const [generatedOutfit, setGeneratedOutfit] = useState([])
+
+
+  let token = JSON.parse(localStorage.getItem('token'));
+
+  token = 'Bearer ' + token;
+  console.log('token wardrobe', token);
+
+  const wardrobeTypeHandler = (e) => {
+    setWardrobeType(e)
+  }
 
   useEffect(() => {
     const fetchOutfits = async () => {
@@ -101,6 +113,7 @@ const Wardrobe = () => {
   //console.log(services)
 
   const handleTabClick = async (tabName) => {
+    setTab("wardrobe")
     setIsLoading(true)
     try {
       const response = await getOutfits(tabName)
@@ -133,27 +146,19 @@ const Wardrobe = () => {
     }
   }
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = (event, tabName) => {
     const selectedImage = event.target.files
     const selectedImageArray = Array.from(selectedImage)
     const formData = new FormData()
 
     const imageArray = selectedImageArray.map((image) => {
-      const uploadEndpoint = config.REACT_APP_UPLOAD_URL
+      const uploadEndpoint = `${config.REACT_APP_UPLOAD_URL}`
 
       formData.append("image", image)
 
       fetch(uploadEndpoint, {
-        method: "POST",
-        body: formData,
+        method: "GET",
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Images uploaded successfully:", data)
-        })
-        .catch((error) => {
-          console.error("Error uploading images:", error)
-        })
       return URL.createObjectURL(image)
     })
 
@@ -167,31 +172,33 @@ const Wardrobe = () => {
   }
 
   const handleImageDelete = async (index) => {
-    try {
-      const deleteResponse = await fetch(
-        `${config.REACT_APP_DELETE_URL}/${index}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    // try {
+    //   const deleteResponse = await fetch(
+    //     `${config.REACT_APP_DELETE_URL}/${index}`,
+    //     {
+    //       method: "DELETE",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   )
 
-      if (deleteResponse.ok) {
-        console.log("Image deleted successfully in the backend.")
+    //   if (deleteResponse.ok) {
+    //     console.log("Image deleted successfully in the backend.")
 
-        const updatedImages = images.filter((image, i) => i !== index)
+    //     const updatedImages = images.filter((image, i) => i !== index)
+    //     setImages(updatedImages)
+    //   } else {
+    //     console.error(
+    //       "Error deleting image in the backend:",
+    //       deleteResponse.statusText
+    //     )
+    //   }
+    // } catch (error) {
+    //   console.error("Error deleting image:", error)
+    // }
+    const updatedImages = images.filter((image, i) => i !== index)
         setImages(updatedImages)
-      } else {
-        console.error(
-          "Error deleting image in the backend:",
-          deleteResponse.statusText
-        )
-      }
-    } catch (error) {
-      console.error("Error deleting image:", error)
-    }
   }
 
   const handleSell = (index) => {
@@ -234,14 +241,14 @@ const Wardrobe = () => {
 
   const handleGenerate = async () => {
     try {
-      const response = await fetch(`${config.REACT_APP_GENERATE_URL}`, {
-        method: "POST",
+      const response = await axios.get(`${config.REACT_APP_GENERATE_URL}`, {
+        // method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
+          Authorization: `${token}`
         },
-        body: JSON.stringify({}),
+        // body: JSON.stringify({}),
       })
-
       if (!response.ok) {
         throw new Error("Error generating match")
       }
@@ -296,7 +303,22 @@ const Wardrobe = () => {
       <div className="h-auto w-[1000px] mx-auto py-28 text-[#14213D]">
         <h1 className="mb-6 text-4xl font-bold">Quick actions</h1>
         {/* TABS */}
-        <div className="flex gap-4 w-full items-center justify-between bg-[white] rounded-lg p-3">
+        <div className="flex gap-4 w-full items-center justify-between rounded-lg p-3">
+          <div
+            onClick={() => setTab("dashboard")}
+            className={
+              tab === "dashboard"
+                ? "flex  justify-between gap-3 items-center px-20 py-2 rounded-md cursor-pointer bg-[#14213D] text-white"
+                : "flex  justify-between gap-3 items-center border border-[#14213D] px-20 py-2 rounded-md cursor-pointer"
+            }
+          >
+            {tab === "dashboard" ? (
+              <img src={dashboardWhite} alt="wardrobe" />
+            ) : (
+              <img src={dashboardIcon} alt="wardrobe" />
+            )}
+            <p className="text-lg font-semibold">Dashboard</p>
+          </div>
           <div
             onClick={() => setTab("wardrobe")}
             className={
@@ -344,7 +366,7 @@ const Wardrobe = () => {
           </div>
         </div>
         {/* PAGE CONTENT */}
-        {tab === "wardrobe" && (
+        {tab === "dashboard" && (
           <div className="flex flex-col">
             <div className="text-zinc-900 text-opacity-90 text-2xl font-bold font-['Manrope'] leading-9">
               Categories
@@ -364,7 +386,7 @@ const Wardrobe = () => {
                     </div>
                   </a>
 
-                  {isLoading
+                  {/* {isLoading
                     ? "Loading... "
                     : outfits.map((outfit) => (
                         <div>
@@ -377,7 +399,7 @@ const Wardrobe = () => {
                           />
                           <p>{outfit.event}</p>
                         </div>
-                      ))}
+                      ))} */}
                 </div>
 
                 <a
@@ -416,41 +438,9 @@ const Wardrobe = () => {
             </div>
           </div>
         )}
-        {tab === "services" && (
-          <div className="">
-            <select
-              onChange={handleRadiusChange}
-              name=""
-              id=""
-              className="w-full px-3 py-3 my-4 rounded-lg"
-            >
-              <option value="">Select radius</option>
-              {radiusOptions.map((radius, index) => (
-                <option key={index} value={radius}>
-                  {radius}
-                </option>
-              ))}
-            </select>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
-              {services?.map((service, index) => (
-                <div
-                  key={index}
-                  className="card rounded-lg border border-[#14213D] p-3"
-                >
-                  <span className="bg-[#14213D] text-slate-100 p-1 px-3 rounded-xl text-sm">
-                    {service?.openingHoursStatus}
-                  </span>
-                  <h2 className="py-3 text-lg font-medium">{service?.name}</h2>
-                  <p>{service?.address}</p>
-                  {/* <p>{service?.businessStatus}</p> */}
-                  <p className="py-3">
-                    {service?.rating}, {service?.userRatingsTotal}
-                  </p>
-                </div>
-              ))}
-            </div>
-            {/* <div className="flex flex-col items-center justify-center gap-20 mt-4">
+        {tab == "wardrobe" && (
+          <div className="flex flex-col items-center justify-center gap-20 mt-4">
               <div className="flex flex-col gap-10">
                 <label className="w-full md:w-[171px] h-[52px] rounded-lg bg-white border border-[#14213D] outline-[#14213D]  cursor-pointer text-center text-lg font-semibold">
                   Upload
@@ -506,54 +496,86 @@ const Wardrobe = () => {
               </div>
 
               <div className="flex flex-col gap-4 mt-auto">
-                <button className="w-full md:w-[171px] h-[52px] rounded-lg bg-white border border-[#14213D] outline-[#14213D] cursor-pointer text-center text-lg font-semibold">
-                  Generate
+                <button className="w-full md:w-[171px] h-[52px] rounded-lg bg-white border border-[#14213D] 
+                outline-[#14213D] cursor-pointer text-center text-lg font-semibold"
+                onClick={() => handleGenerate()}
+                >
+                  Generate                
                 </button>
               </div>
             </div>
+        )}
+        {tab === "services" && (
+          <div className="">
+            <select
+              onChange={handleRadiusChange}
+              name=""
+              id=""
+              className="w-full px-3 py-3 my-4 rounded-lg"
+            >
+              <option value="">Select radius</option>
+              {radiusOptions.map((radius, index) => (
+                <option key={index} value={radius}>
+                  {radius}
+                </option>
+              ))}
+            </select>
 
-            <div className="flex flex-col gap-4 mt-auto">
-              <button
-                className="w-full md:w-[171px] h-[52px] rounded-lg bg-white border border-[#14213D] outline-[#14213D] cursor-pointer text-center text-lg font-semibold"
-                onClick={() => handleGenerate}
-              >
-                Generate
-              </button>
-            </div> */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+              {services?.map((service, index) => (
+                <div
+                  key={index}
+                  className="card rounded-lg border border-[#14213D] p-3"
+                >
+                  <span className="bg-[#14213D] text-slate-100 p-1 px-3 rounded-xl text-sm">
+                    {service?.openingHoursStatus}
+                  </span>
+                  <h2 className="py-3 text-lg font-medium">{service?.name}</h2>
+                  <p>{service?.address}</p>
+                  {/* <p>{service?.businessStatus}</p> */}
+                  <p className="py-3">
+                    rating: {service?.rating} </p>
+                    <p className="py-3">
+                    total users: {service?.userRatingsTotal}
+                  </p>
+                </div>
+              ))}
+            </div>
+            
           </div>
         )}
         {tab === "marketplace" && (
           <div className="flex flex-col justify-between w-full h-auto gap-20 mt-12">
-            {/* USERS */}
-            {outfitsForSale?.map((user, index) => (
-              <div key={index} className="">
-                <h1 className="mb-6 text-2xl font-bold ">
-                  {" "}
-                  User {user.id}: <span>{user.user?.firstName}</span>
-                </h1>
-                <div className="flex">
-                  <div className="relative flex flex-wrap h-auto gap-3 px-4 py-6 bg-white">
-                    {user?.clothingItemsForSale?.map((img) => (
-                      <div className="rounded-lg w-[290px] h-[270px] mb-6">
-                        <img
-                          src={img.url}
-                          alt="user"
-                          className="w-full rounded-lg"
-                        />
-                      </div>
-                    ))}
-                    <div className="flex flex-col justify-end">
-                      <button className="rounded-full h-[50px] w-[50px] bg-[#14213D] flex items-center justify-around">
-                        <img
-                          src={plusIcon}
-                          alt="plus-icon"
-                          className="h-[25px] w-[25px] justify-center"
-                        />
-                      </button>
+          {/* USERS */}
+          {users.map((user) => (
+            <div key={user.id} className="">
+              <h1 className="mb-6 text-2xl font-bold ">
+                {" "}
+                User {user.id}: <span>{user.name}</span>
+              </h1>
+              <div className="flex">
+                <div className="relative flex flex-wrap h-auto gap-3 px-4 py-6 bg-white">
+                  {user.image.map((img) => (
+                    <div className="rounded-lg w-[290px] h-[270px] mb-6">
+                      <img
+                        src={img}
+                        alt="user"
+                        className="w-full rounded-lg"
+                      />
                     </div>
+                  ))}
+                  <div className="flex flex-col justify-end">
+                    <button className="rounded-full h-[50px] w-[50px] bg-[#14213D] flex items-center justify-around">
+                      <img
+                        src={plusIcon}
+                        alt="plus-icon"
+                        className="h-[25px] w-[25px] justify-center"
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
+            </div>
             ))}
           </div>
         )}
